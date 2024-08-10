@@ -1,0 +1,64 @@
+class InsertData
+{
+    int room;
+    String name;
+    String id;
+    String number;
+    InsertData(int room,String name, String id,String number)
+        {
+            this.room=room;
+            this.name=name;
+            this.id=id;
+            this.number=number;
+        }
+        public void insert() throws Exception
+        {
+            String url="jdbc:mysql://localhost:3306/hotel";
+            String db="hotel";
+            String userName="root";
+            String password="8H1a0r4dik";
+            String driverName="com.mysql.cj.jdbc.Driver";
+
+            Class.forName(driverName);
+            Connection con=DriverManager.getConnection(url, userName, password);
+            String sql="insert into table Guest_info values(?,?,?,?)";
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setInt(1,room);
+            pst.setString(2,name);
+            pst.setString(3,id);
+            pst.setString(4,number);
+            pst.executeUpdate(sql);
+        }
+}
+
+class FetchData
+{
+
+    int room;
+    FetchData(int room)
+    {
+        this.room=room;
+    }
+    
+    public void fetch() throws Exception
+    {
+        String url="jdbc:mysql://localhost:3306/hardik";
+        String db="hardik";
+        String userName="root";
+        String password="8H1a0r4dik";
+        String driverName="com.mysql.cj.jdbc.Driver";
+
+        Class.forName(driverName);
+        Connection con=DriverManager.getConnection(url, userName, password);
+        Statement st=(Statement) con.createStatement();
+        String sql="select*from hote where room=%"+room;
+        ResultSet rs=st.executeQuery(sql);
+        System.out.println();
+        System.out.println("room : "+rs.getInt(1));
+        System.out.println("name : "+rs.getString(2));
+        System.out.println("id : "+rs.getString(3));
+        System.out.println("number : "+rs.getString(4));
+    }
+
+}
+
